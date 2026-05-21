@@ -50,14 +50,14 @@ export function Feedback() {
     width: '100%',
     padding: '12px 16px',
     borderRadius: 12,
-    background: focused === field ? 'rgba(139,92,246,0.07)' : 'rgba(255,255,255,0.04)',
-    border: `1px solid ${focused === field ? 'rgba(139,92,246,0.45)' : 'rgba(255,255,255,0.08)'}`,
-    color: '#ede9fe',
+    background: focused === field ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.04)',
+    border: `1px solid ${focused === field ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.08)'}`,
+    color: '#ffffff',
     fontSize: 14,
     fontFamily: 'Inter, sans-serif',
     outline: 'none',
     transition: 'background 0.2s, border-color 0.2s',
-    caretColor: '#8b5cf6',
+    caretColor: '#ffffff',
   })
 
   const types = ['feedback', 'bug', 'feature', 'other']
@@ -71,14 +71,14 @@ export function Feedback() {
       <div style={{
         position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)',
         width: 600, height: 1,
-        background: 'linear-gradient(90deg, transparent, rgba(59,130,246,0.4), rgba(139,92,246,0.4), transparent)',
+        background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), rgba(255,255,255,0.2), transparent)',
       }} />
 
       {/* Ambient glow */}
       <div style={{
         position: 'absolute', bottom: '10%', left: '50%', transform: 'translateX(-50%)',
         width: 600, height: 300,
-        background: 'radial-gradient(ellipse, rgba(139,92,246,0.1) 0%, transparent 70%)',
+        background: 'radial-gradient(ellipse, rgba(255,255,255,0.05) 0%, transparent 70%)',
         pointerEvents: 'none', filter: 'blur(30px)',
       }} />
 
@@ -110,9 +110,9 @@ export function Feedback() {
           <div style={{
             display: 'inline-block',
             padding: '5px 14px', borderRadius: 100,
-            background: 'rgba(139,92,246,0.1)',
-            border: '1px solid rgba(139,92,246,0.25)',
-            fontSize: 12, color: '#c4b5fd',
+            background: 'rgba(255,255,255,0.05)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            fontSize: 12, color: '#e5e5e5',
             letterSpacing: '0.08em', textTransform: 'uppercase',
             fontWeight: 500, marginBottom: 20,
           }}>Feedback</div>
@@ -125,10 +125,10 @@ export function Feedback() {
             fontWeight: 700
           }}>
             Help shape<br />
-            <em style={{ color: 'rgba(167,139,250,0.9)', fontStyle: 'normal' }}>Workflow Memory.</em>
+            <em style={{ color: 'rgba(255,255,255,0.9)', fontStyle: 'normal' }}>Workflow Memory.</em>
           </h2>
           <p style={{
-            fontSize: 15.5, color: 'rgba(237,233,254,0.5)',
+            fontSize: 15.5, color: 'rgba(255,255,255,0.6)',
             fontWeight: 300, lineHeight: 1.7,
           }}>
             Found a bug? Have a feature idea? Just want to say hi?<br />
@@ -145,7 +145,7 @@ export function Feedback() {
           style={{
             padding: '40px',
             borderRadius: 24,
-            background: 'rgba(13,10,26,0.7)',
+            background: 'rgba(10,10,10,0.7)',
             border: '1px solid rgba(255,255,255,0.08)',
             backdropFilter: 'blur(20px)',
             boxShadow: '0 24px 80px rgba(0,0,0,0.4)',
@@ -155,7 +155,7 @@ export function Feedback() {
           {/* Name + Email row */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
             <div>
-              <label style={{ fontSize: 12, color: 'rgba(237,233,254,0.4)', display: 'block', marginBottom: 7, letterSpacing: '0.02em' }}>
+              <label style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', display: 'block', marginBottom: 7, letterSpacing: '0.02em' }}>
                 Name <span style={{ color: '#ef4444' }}>*</span>
               </label>
               <input
@@ -171,7 +171,7 @@ export function Feedback() {
               />
             </div>
             <div>
-              <label style={{ fontSize: 12, color: 'rgba(237,233,254,0.4)', display: 'block', marginBottom: 7, letterSpacing: '0.02em' }}>
+              <label style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', display: 'block', marginBottom: 7, letterSpacing: '0.02em' }}>
                 Email <span style={{ color: '#ef4444' }}>*</span>
               </label>
               <input
@@ -190,7 +190,7 @@ export function Feedback() {
 
           {/* Type selector */}
           <div>
-            <label style={{ fontSize: 12, color: 'rgba(237,233,254,0.4)', display: 'block', marginBottom: 10, letterSpacing: '0.02em' }}>
+            <label style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', display: 'block', marginBottom: 10, letterSpacing: '0.02em' }}>
               Type
             </label>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -202,12 +202,12 @@ export function Feedback() {
                   style={{
                     padding: '7px 16px', borderRadius: 100, fontSize: 13,
                     background: form.type === t
-                      ? 'linear-gradient(135deg, rgba(139,92,246,0.35), rgba(59,130,246,0.25))'
+                      ? 'linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1))'
                       : 'rgba(255,255,255,0.04)',
                     border: form.type === t
-                      ? '1px solid rgba(139,92,246,0.5)'
+                      ? '1px solid rgba(255,255,255,0.4)'
                       : '1px solid rgba(255,255,255,0.08)',
-                    color: form.type === t ? '#c4b5fd' : 'rgba(237,233,254,0.45)',
+                    color: form.type === t ? '#ffffff' : 'rgba(255,255,255,0.6)',
                     cursor: 'pointer',
                     transition: 'all 0.2s',
                     textTransform: 'capitalize',
@@ -220,7 +220,7 @@ export function Feedback() {
 
           {/* Message */}
           <div>
-            <label style={{ fontSize: 12, color: 'rgba(237,233,254,0.4)', display: 'block', marginBottom: 7, letterSpacing: '0.02em' }}>
+            <label style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', display: 'block', marginBottom: 7, letterSpacing: '0.02em' }}>
               Message <span style={{ color: '#ef4444' }}>*</span>
             </label>
             <textarea
@@ -251,11 +251,11 @@ export function Feedback() {
               borderRadius: 12,
               background: status === 'sent'
                 ? 'linear-gradient(135deg, rgba(34,197,94,0.3), rgba(16,185,129,0.2))'
-                : 'linear-gradient(135deg, #8b5cf6, #3b82f6)',
-              border: status === 'sent' ? '1px solid rgba(34,197,94,0.4)' : 'none',
+                : 'linear-gradient(135deg, #404040, #262626)',
+              border: status === 'sent' ? '1px solid rgba(34,197,94,0.4)' : '1px solid rgba(255,255,255,0.1)',
               color: status === 'sent' ? '#86efac' : '#fff',
               fontSize: 15, fontWeight: 500,
-              boxShadow: status === 'idle' ? '0 0 30px rgba(139,92,246,0.35)' : 'none',
+              boxShadow: status === 'idle' ? '0 0 30px rgba(255,255,255,0.05)' : 'none',
               transition: 'all 0.3s',
               cursor: status === 'idle' ? 'pointer' : 'default',
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
@@ -274,7 +274,7 @@ export function Feedback() {
             {status === 'error' && 'Something went wrong. Try again.'}
           </motion.button>
 
-          <p style={{ fontSize: 12, color: 'rgba(237,233,254,0.25)', textAlign: 'center', lineHeight: 1.6 }}>
+          <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', textAlign: 'center', lineHeight: 1.6 }}>
             Your message goes directly to the developer.
             No bots, no ticketing system.
           </p>
