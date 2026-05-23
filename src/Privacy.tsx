@@ -119,7 +119,7 @@ export default function Privacy() {
         <section style={{ marginBottom: '60px' }}>
           <h2 style={{ fontSize: '1.5rem', color: 'var(--text-main)', marginBottom: '16px' }}>Contact</h2>
           <p>For questions, feedback, or privacy-related concerns, contact:</p>
-          <a href="mailto:your-email@gmail.com" style={{ color: 'var(--text-main)', marginTop: '8px', display: 'inline-block' }}>your-email@gmail.com</a>
+          <a href="mailto:zoomershredder@gmail.com" style={{ color: 'var(--text-main)', marginTop: '8px', display: 'inline-block' }}>zoomershredder@gmail.com</a>
         </section>
       </div>
     </div>

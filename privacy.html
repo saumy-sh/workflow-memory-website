@@ -2,7 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/png" href="/vite.svg" />
+    <script type="module">
+      import iconUrl from '/src/assets/icon48.png'
+      const link = document.querySelector("link[rel~='icon']")
+      if (link) {
+        link.href = iconUrl
+        link.type = 'image/png'
+      }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Privacy Policy - Workflow Memory</title>
   </head>

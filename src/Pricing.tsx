@@ -6,44 +6,84 @@ export function Pricing() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section id="pricing" ref={ref} style={{ padding: '100px 24px', position: 'relative' }}>
+    <section id="pricing" ref={ref} style={{ padding: '120px 24px', position: 'relative' }}>
+      {/* Top divider line */}
+      <div style={{
+        position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)',
+        width: 400, height: 1,
+        background: 'linear-gradient(90deg, transparent, rgba(90,124,255,0.2), transparent)',
+      }} />
+
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.7 }}
-        style={{ textAlign: 'center', marginBottom: 40 }}
+        style={{ textAlign: 'center', marginBottom: 48 }}
       >
         <div style={{
-          display: 'inline-block', padding: '6px 14px', borderRadius: 100,
-          background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
-          fontSize: 13, color: '#e5e5e5', letterSpacing: '0.05em', textTransform: 'uppercase',
-          fontWeight: 600, marginBottom: 24,
+          display: 'inline-block', padding: '6px 16px', borderRadius: 100,
+          background: 'rgba(90, 124, 255, 0.08)', border: '1px solid rgba(90, 124, 255, 0.2)',
+          fontSize: 12, color: 'var(--primary-light)', letterSpacing: '0.08em', textTransform: 'uppercase',
+          fontWeight: 700, marginBottom: 24,
         }}>Pricing</div>
 
-        <h2 style={{ fontSize: 'clamp(28px, 4vw, 42px)', marginBottom: 12, color: '#fff', lineHeight: 1.05, fontFamily: 'Inter, serif', fontWeight: 700 }}>
+        <h2 className="section-title" style={{ marginBottom: 16 }}>
           Freemium today — premium soon
         </h2>
-        <p style={{ color: 'rgba(255,255,255,0.6)', maxWidth: 780, margin: '0 auto', fontSize: 15.5, lineHeight: 1.7, fontWeight: 300 }}>
+        <p style={{ color: 'var(--text-muted)', maxWidth: 780, margin: '0 auto', fontSize: 16, lineHeight: 1.7, fontWeight: 400 }}>
           Workflow Memory is available now as a freemium product: core features are free to use forever.
           We plan to introduce a thoughtfully priced premium tier in the near future — pricing will be very affordable and guided by user feedback and reviews.
         </p>
       </motion.div>
 
-      <div style={{ maxWidth: 1000, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 20 }}>
-        <div style={{ padding: 28, borderRadius: 16, background: 'rgba(10,10,10,0.6)', border: '1px solid rgba(255,255,255,0.06)' }}>
-          <div style={{ fontSize: 14, fontWeight: 700, color: '#e5e5e5', marginBottom: 8 }}>Freemium</div>
-          <div style={{ fontSize: 22, fontWeight: 800, color: '#fff', marginBottom: 10 }}>Free</div>
-          <p style={{ color: 'rgba(255,255,255,0.5)', marginBottom: 12, lineHeight: 1.6 }}>
-            Full access to essential features — capture, organize, and revisit web content without limits.
-          </p>
+      <div style={{ maxWidth: 1000, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
+        {/* Free tier card */}
+        <div className="feature-card" style={{ padding: 36, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <div>
+            <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--primary-light)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 12 }}>Freemium</div>
+            <div style={{ fontSize: 36, fontWeight: 800, color: '#fff', marginBottom: 16, fontFamily: 'Outfit, sans-serif' }}>
+              Free <span style={{ fontSize: 16, fontWeight: 400, color: 'var(--text-muted)' }}>/ forever</span>
+            </div>
+            <p style={{ color: 'var(--text-muted)', marginBottom: 24, lineHeight: 1.7, fontSize: '0.95rem' }}>
+              Full access to essential features — capture, organize, and revisit your browsing sessions without limits.
+            </p>
+          </div>
+          <div style={{ borderTop: '1px solid rgba(90,124,255,0.08)', paddingTop: 20, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#fff' }}>
+              <span style={{ color: 'var(--primary-light)' }}>✓</span> Offline-first local storage
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#fff' }}>
+              <span style={{ color: 'var(--primary-light)' }}>✓</span> Visual flow mapping graph
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#fff' }}>
+              <span style={{ color: 'var(--primary-light)' }}>✓</span> Local search and filters
+            </div>
+          </div>
         </div>
 
-        <div style={{ padding: 28, borderRadius: 16, background: 'rgba(10,10,10,0.6)', border: '1px solid rgba(255,255,255,0.06)' }}>
-          <div style={{ fontSize: 14, fontWeight: 700, color: '#e5e5e5', marginBottom: 8 }}>Premium (coming soon)</div>
-          <div style={{ fontSize: 22, fontWeight: 800, color: '#fff', marginBottom: 10 }}>Affordable</div>
-          <p style={{ color: 'rgba(255,255,255,0.5)', marginBottom: 12, lineHeight: 1.6 }}>
-            Planned premium features will include advanced OCR and much more. Pricing will be set based on community input to remain affordable. Your feedback matters — let us know what you'd like to see in the premium tier!
-          </p>
+        {/* Premium tier card */}
+        <div className="feature-card" style={{ padding: 36, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderColor: 'rgba(90, 124, 255, 0.25)' }}>
+          <div style={{ position: 'absolute', top: 16, right: 20, background: 'linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)', color: '#fff', fontSize: 10, fontWeight: 700, padding: '4px 10px', borderRadius: 100, textTransform: 'uppercase' }}>Coming Soon</div>
+          <div>
+            <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--primary-light)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 12 }}>Premium</div>
+            <div style={{ fontSize: 36, fontWeight: 800, color: '#fff', marginBottom: 16, fontFamily: 'Outfit, sans-serif' }}>
+              Affordable
+            </div>
+            <p style={{ color: 'var(--text-muted)', marginBottom: 24, lineHeight: 1.7, fontSize: '0.95rem' }}>
+              Planned premium features will include advanced OCR indexing, cloud sync, and semantic searching. Pricing will be set based on community input to remain accessible.
+            </p>
+          </div>
+          <div style={{ borderTop: '1px solid rgba(90,124,255,0.08)', paddingTop: 20, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#fff' }}>
+              <span style={{ color: 'var(--primary-light)' }}>✓</span> Advanced OCR page searching
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#fff' }}>
+              <span style={{ color: 'var(--primary-light)' }}>✓</span> Encrypted cross-device cloud sync
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#fff' }}>
+              <span style={{ color: 'var(--primary-light)' }}>✓</span> Early access to new features
+            </div>
+          </div>
         </div>
       </div>
     </section>
