@@ -1,37 +1,72 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Shield, 
   ArrowRight, 
   ExternalLink,
-  Laptop,
   CheckCircle,
-  Undo2
+  Volume2,
+  VolumeX,
+  Play
 } from 'lucide-react';
 import { Feedback } from './Feedback';
 import { Pricing } from './Pricing';
 import { FeaturesGraph } from './FeaturesGraph';
 import logoUrl from './assets/icon128.png';
+import demoVideoUrl from './assets/complete_demo.mp4';
 
-// Simulation nodes for the Hero section
-const heroNodes = [
-  { id: 'h1', label: 'Google Search', type: 'search', url: 'google.com/search?q=react+state...', tabs: 1, time: '14:20' },
-  { id: 'h2', label: 'React docs', type: 'docs', url: 'react.dev/reference/react/useState', tabs: 2, time: '14:22' },
-  { id: 'h3', label: 'StackOverflow', type: 'so', url: 'stackoverflow.com/questions/4320...', tabs: 4, time: '14:25' },
-  { id: 'h4', label: 'Gemini prompt', type: 'ai', url: 'gemini.google.com/app', tabs: 5, time: '14:27' },
-  { id: 'h5', label: 'Localhost port', type: 'code', url: 'localhost:5173', tabs: 5, time: '14:30' },
+const rotatingPhrases = [
+  "prompts",
+  "copied text",
+  "searches",
+  "tabs",
+  "sites"
 ];
 
 function App() {
-  const [activeHeroNode, setActiveHeroNode] = useState('h4');
+  const [phraseIndex, setPhraseIndex] = useState(0);
   const [showToast, setShowToast] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [playbackRate, setPlaybackRate] = useState(1.75);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPhraseIndex((prev) => (prev + 1) % rotatingPhrases.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = playbackRate;
+    }
+  }, [playbackRate]);
+
+  const handlePlay = () => {
+    if (videoRef.current) {
+      videoRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+
+  const handleVideoClick = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        videoRef.current.play();
+        setIsPlaying(true);
+      }
+    }
+  };
 
   const triggerRestore = () => {
     setShowToast(true);
     setTimeout(() => setShowToast(false), 3000);
   };
-
-  const selectedNode = heroNodes.find(n => n.id === activeHeroNode) || heroNodes[3];
 
   return (
     <div className="min-h-screen" style={{ position: 'relative' }}>
@@ -82,16 +117,46 @@ function App() {
       {/* Hero Section */}
       <section className="hero">
         <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+          <motion.h1
+            className="hero-title"
+            initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
           >
-            <h1 className="hero-title">Your Browser's Photographic Memory.</h1>
-            <p className="hero-subtitle">
-              Automatically map your research, instantly restore tabs, and never lose a prompt, search, or form draft again. 100% private, 100% offline.
-            </p>
-          </motion.div>
+            Workflow Memory
+          </motion.h1>
+          <motion.p
+            className="hero-subtitle"
+            initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+            style={{ 
+              lineHeight: '1.8', 
+              fontSize: '1.25rem', 
+              maxWidth: '750px', 
+              margin: '0 auto 40px auto', 
+              textAlign: 'center' 
+            }}
+          >
+            Automatically map your web sessions on the fly, instantly restore tabs, and never lose your{' '}
+            <span style={{ display: 'inline-block', position: 'relative', width: '140px', textAlign: 'left' }}>
+              <span style={{ visibility: 'hidden', fontWeight: 600 }}>prompts</span>
+              <AnimatePresence>
+                <motion.span
+                  key={phraseIndex}
+                  initial={{ opacity: 0, y: 10, filter: 'blur(8px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, y: -10, filter: 'blur(8px)' }}
+                  transition={{ duration: 0.5, ease: 'easeOut' }}
+                  style={{ position: 'absolute', left: 0, top: 0, color: 'var(--primary-light)', fontWeight: 600, whiteSpace: 'nowrap' }}
+                >
+                  {rotatingPhrases[phraseIndex]}
+                </motion.span>
+              </AnimatePresence>
+            </span>
+            <br />
+            <span style={{ opacity: 0.7, fontSize: '0.85em', display: 'inline-block', marginTop: '16px', fontWeight: 400 }}>100% private. 100% offline.</span>
+          </motion.p>
           
           <div className="hero-actions">
             <button className="btn-primary hero-btn" onClick={triggerRestore}>
@@ -101,212 +166,187 @@ function App() {
               Explore Features <ArrowRight size={18} />
             </a>
           </div>
-          
-          {/* Interactive Hero Simulator */}
-          <div className="hero-image-container">
-            <div className="mockup-frame">
-              {/* Browser bar */}
-              <div style={{ 
-                height: 44, 
-                background: '#0a0d1d', 
-                borderBottom: '1px solid rgba(90, 124, 255, 0.15)', 
-                display: 'flex', 
-                alignItems: 'center', 
-                padding: '0 16px', 
-                gap: 12,
-                justifyContent: 'space-between'
-              }}>
-                <div style={{ display: 'flex', gap: 6 }}>
-                  <span style={{ width: 11, height: 11, borderRadius: '50%', background: '#ef4444' }}></span>
-                  <span style={{ width: 11, height: 11, borderRadius: '50%', background: '#f59e0b' }}></span>
-                  <span style={{ width: 11, height: 11, borderRadius: '50%', background: '#10b981' }}></span>
-                </div>
-                <div style={{ 
-                  background: 'rgba(4, 6, 18, 0.6)', 
-                  borderRadius: 6, 
-                  height: 28, 
-                  flex: 1, 
-                  maxWidth: 600, 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  padding: '0 12px',
-                  fontSize: 12,
-                  color: 'rgba(255,255,255,0.6)',
-                  border: '1px solid rgba(90, 124, 255, 0.08)',
-                  gap: 8
-                }}>
-                  <span style={{ color: '#22c55e' }}>🔒 Secures</span>
-                  <span style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
-                    workflow-memory://dashboard/workspaces/react-rendering
-                  </span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <img src={logoUrl} width={18} height={18} alt="extension" />
-                  <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>Extension Active</span>
-                </div>
-              </div>
+        </div>
+      </section>
 
-              {/* Workspace Split View */}
-              <div style={{ display: 'flex', flex: 1, height: 'calc(100% - 44px)' }}>
-                {/* Left Tree Graph (Interactive) */}
-                <div style={{ 
-                  width: '60%', 
-                  borderRight: '1px solid rgba(90, 124, 255, 0.1)', 
-                  background: 'radial-gradient(circle at 50% 50%, rgba(90, 124, 255, 0.03) 0%, transparent 80%)',
-                  position: 'relative',
+      {/* Demo Section */}
+      <section id="demo" style={{ padding: '60px 0 100px 0' }}>
+        <div className="container">
+          {/* Animated Arrow & Text */}
+          <div style={{ position: 'relative', width: '100%', zIndex: 20 }}>
+            <motion.div
+              initial={{ opacity: 0, y: -10, rotate: -5 }}
+              animate={{ opacity: 1, y: 0, rotate: -5 }}
+              transition={{ delay: 1, duration: 0.5, type: 'spring' }}
+              style={{
+                position: 'absolute',
+                top: -60,
+                left: '12%',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                pointerEvents: 'none'
+              }}
+            >
+              <motion.div
+                animate={{ y: [0, -8, 0] }}
+                transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+              >
+                <span style={{ 
+                  fontFamily: '"Comic Sans MS", "Chalkboard SE", "Marker Felt", sans-serif', 
+                  fontSize: '1.4rem', 
+                  color: 'var(--primary-light, #8ba3ff)', 
+                  fontWeight: 'bold',
+                  filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.6))',
+                  display: 'block',
+                  transform: 'rotate(-5deg)'
+                }}>
+                  Watch the demo!
+                </span>
+                <svg width="70" height="70" viewBox="0 0 100 100" style={{ marginTop: -5, marginLeft: 10, filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.4))' }}>
+                  <motion.path
+                    d="M 15 20 Q 50 15, 65 70"
+                    stroke="var(--primary-light, #8ba3ff)"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                    fill="none"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ delay: 1.5, duration: 0.8 }}
+                  />
+                  <motion.path
+                    d="M 45 60 L 65 70 L 75 50"
+                    stroke="var(--primary-light, #8ba3ff)"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    fill="none"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 2.2, duration: 0.3 }}
+                  />
+                </svg>
+              </motion.div>
+            </motion.div>
+          </div>
+
+          {/* Video Demo */}
+          <div className="hero-image-container" style={{ position: 'relative', overflow: 'hidden', borderRadius: 16, border: '1px solid rgba(90, 124, 255, 0.2)', boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)' }}>
+            <video
+              ref={videoRef}
+              src={demoVideoUrl}
+              loop
+              muted={isMuted}
+              playsInline
+              onClick={handleVideoClick}
+              style={{
+                width: '100%',
+                display: 'block',
+                transform: 'scale(1.1)',
+                objectFit: 'cover',
+                cursor: 'pointer'
+              }}
+            />
+
+            {!isPlaying && (
+              <div 
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'rgba(0,0,0,0.4)',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                  <div style={{ position: 'absolute', top: 12, left: 16, fontSize: 11, color: 'var(--text-muted)' }}>
-                    Visual Flow Workspace Simulator
-                  </div>
-                  
-                  {/* Vector connecting branches */}
-                  <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
-                    <path d="M 60 220 Q 150 160, 240 130" fill="none" stroke="rgba(90, 124, 255, 0.15)" strokeWidth="3" />
-                    <path d="M 60 220 Q 150 220, 240 220" fill="none" stroke="rgba(90, 124, 255, 0.15)" strokeWidth="3" />
-                    <path d="M 60 220 Q 150 280, 240 310" fill="none" stroke="rgba(90, 124, 255, 0.15)" strokeWidth="3" />
-                    <path d="M 240 130 L 380 100" fill="none" stroke="rgba(90, 124, 255, 0.15)" strokeWidth="3" />
-                    <path d="M 240 310 L 380 340" fill="none" stroke="rgba(90, 124, 255, 0.15)" strokeWidth="3" strokeDasharray="4" />
-                    
-                    {/* Active highlighted lines */}
-                    {activeHeroNode === 'h1' && <circle cx="60" cy="220" r="14" fill="rgba(90,124,255,0.15)" stroke="var(--primary)" strokeWidth="1" />}
-                    {activeHeroNode === 'h2' && <path d="M 60 220 Q 150 160, 240 130" fill="none" stroke="var(--primary)" strokeWidth="3" />}
-                    {activeHeroNode === 'h3' && <path d="M 60 220 Q 150 220, 240 220" fill="none" stroke="var(--primary)" strokeWidth="3" />}
-                    {activeHeroNode === 'h4' && <path d="M 240 130 L 380 100" fill="none" stroke="var(--primary)" strokeWidth="3" />}
-                    {activeHeroNode === 'h5' && <path d="M 60 220 Q 150 280, 240 310" fill="none" stroke="var(--primary)" strokeWidth="3" />}
-                  </svg>
-
-                  {/* Interactive Nodes */}
-                  <div 
-                    onClick={() => setActiveHeroNode('h1')} 
-                    style={{ position: 'absolute', left: 40, top: 200, cursor: 'pointer', zIndex: 10 }}
-                  >
-                    <div style={{ 
-                      width: 40, height: 40, borderRadius: '50%', 
-                      background: activeHeroNode === 'h1' ? 'var(--primary)' : '#0f172a',
-                      border: '2px solid ' + (activeHeroNode === 'h1' ? '#fff' : 'rgba(90,124,255,0.3)'),
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      boxShadow: activeHeroNode === 'h1' ? '0 0 15px var(--primary)' : 'none',
-                      transition: 'all 0.3s'
-                    }}>
-                      🔍
-                    </div>
-                  </div>
-
-                  <div 
-                    onClick={() => setActiveHeroNode('h2')} 
-                    style={{ position: 'absolute', left: 220, top: 110, cursor: 'pointer', zIndex: 10 }}
-                  >
-                    <div style={{ 
-                      width: 40, height: 40, borderRadius: '50%', 
-                      background: activeHeroNode === 'h2' ? 'var(--primary)' : '#0f172a',
-                      border: '2px solid ' + (activeHeroNode === 'h2' ? '#fff' : 'rgba(90,124,255,0.3)'),
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      boxShadow: activeHeroNode === 'h2' ? '0 0 15px var(--primary)' : 'none',
-                      transition: 'all 0.3s'
-                    }}>
-                      📄
-                    </div>
-                  </div>
-
-                  <div 
-                    onClick={() => setActiveHeroNode('h3')} 
-                    style={{ position: 'absolute', left: 220, top: 200, cursor: 'pointer', zIndex: 10 }}
-                  >
-                    <div style={{ 
-                      width: 40, height: 40, borderRadius: '50%', 
-                      background: activeHeroNode === 'h3' ? 'var(--primary)' : '#0f172a',
-                      border: '2px solid ' + (activeHeroNode === 'h3' ? '#fff' : 'rgba(90,124,255,0.3)'),
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      boxShadow: activeHeroNode === 'h3' ? '0 0 15px var(--primary)' : 'none',
-                      transition: 'all 0.3s'
-                    }}>
-                      💬
-                    </div>
-                  </div>
-
-                  <div 
-                    onClick={() => setActiveHeroNode('h4')} 
-                    style={{ position: 'absolute', left: 360, top: 80, cursor: 'pointer', zIndex: 10 }}
-                  >
-                    <div style={{ 
-                      width: 40, height: 40, borderRadius: '50%', 
-                      background: activeHeroNode === 'h4' ? 'var(--primary)' : '#0f172a',
-                      border: '2px solid ' + (activeHeroNode === 'h4' ? '#fff' : 'rgba(90,124,255,0.3)'),
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      boxShadow: activeHeroNode === 'h4' ? '0 0 15px var(--primary)' : 'none',
-                      transition: 'all 0.3s'
-                    }}>
-                      🤖
-                    </div>
-                  </div>
-
-                  <div 
-                    onClick={() => setActiveHeroNode('h5')} 
-                    style={{ position: 'absolute', left: 220, top: 290, cursor: 'pointer', zIndex: 10 }}
-                  >
-                    <div style={{ 
-                      width: 40, height: 40, borderRadius: '50%', 
-                      background: activeHeroNode === 'h5' ? 'var(--primary)' : '#0f172a',
-                      border: '2px solid ' + (activeHeroNode === 'h5' ? '#fff' : 'rgba(90,124,255,0.3)'),
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      boxShadow: activeHeroNode === 'h5' ? '0 0 15px var(--primary)' : 'none',
-                      transition: 'all 0.3s'
-                    }}>
-                      ⚙️
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right Inspect Panel (Shows active node detail) */}
-                <div style={{ 
-                  width: '40%', 
-                  background: 'rgba(4, 6, 18, 0.9)', 
-                  padding: 24,
+                  justifyContent: 'center',
+                  zIndex: 15,
+                  cursor: 'pointer'
+                }}
+                onClick={handlePlay}
+              >
+                <div style={{
+                  width: 80,
+                  height: 80,
+                  borderRadius: '50%',
+                  background: 'var(--primary)',
                   display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  textAlign: 'left'
-                }}>
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--primary-light)', fontSize: 11, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: 12 }}>
-                      <Laptop size={12} /> Node Inspector
-                    </div>
-                    
-                    <h3 style={{ fontSize: '1.25rem', marginBottom: 6, color: '#fff' }}>{selectedNode.label}</h3>
-                    <div style={{ color: 'var(--text-muted)', fontSize: 12, wordBreak: 'break-all', marginBottom: 16 }}>
-                      {selectedNode.url}
-                    </div>
-
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: 6 }}>
-                        <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>Visited Time</span>
-                        <span style={{ fontSize: 12, color: '#fff', fontWeight: 600 }}>{selectedNode.time}</span>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: 6 }}>
-                        <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>Tabs Open</span>
-                        <span style={{ fontSize: 12, color: '#fff', fontWeight: 600 }}>{selectedNode.tabs} tabs</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    <button 
-                      onClick={triggerRestore}
-                      className="btn-primary" 
-                      style={{ width: '100%', fontSize: 13, padding: '10px 16px', gap: 6 }}
-                    >
-                      <Undo2 size={14} /> Restore Till Here
-                    </button>
-                    <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', textAlign: 'center' }}>
-                      Reopens the exact browser tabs active at {selectedNode.time}
-                    </p>
-                  </div>
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 10px 30px rgba(90, 124, 255, 0.5)',
+                  transition: 'transform 0.2s',
+                }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.1)'}
+                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                >
+                  <Play size={40} color="white" style={{ marginLeft: 6 }} />
                 </div>
               </div>
+            )}
+            
+            <div style={{
+              position: 'absolute',
+              top: 20,
+              right: 20,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 8,
+              zIndex: 10
+            }}>
+              {[1, 1.5, 1.75].map((rate) => (
+                <button
+                  key={rate}
+                  onClick={() => setPlaybackRate(rate)}
+                  style={{
+                    background: playbackRate === rate ? 'rgba(90, 124, 255, 0.9)' : 'rgba(0, 0, 0, 0.6)',
+                    border: playbackRate === rate ? '1px solid rgba(255,255,255,0.4)' : '1px solid rgba(255,255,255,0.1)',
+                    borderRadius: '50%',
+                    width: 38,
+                    height: 38,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    color: 'white',
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                    backdropFilter: 'blur(8px)',
+                    transition: 'all 0.2s',
+                  }}
+                  onMouseEnter={(e) => {
+                    if (playbackRate !== rate) e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)';
+                  }}
+                  onMouseLeave={(e) => {
+                    if (playbackRate !== rate) e.currentTarget.style.background = 'rgba(0, 0, 0, 0.6)';
+                  }}
+                >
+                  {rate}x
+                </button>
+              ))}
             </div>
+
+            <button 
+              onClick={() => setIsMuted(!isMuted)}
+              style={{
+                position: 'absolute',
+                bottom: 20,
+                right: 20,
+                background: 'rgba(0, 0, 0, 0.6)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                borderRadius: '50%',
+                width: 44,
+                height: 44,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                color: 'white',
+                backdropFilter: 'blur(8px)',
+                transition: 'all 0.2s',
+                zIndex: 10
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)'}
+              onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(0, 0, 0, 0.6)'}
+            >
+              {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+            </button>
           </div>
         </div>
       </section>
