@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchProfile = async (userId: string) => {
+  const fetchProfile = async (userId: string, userEmail?: string) => {
     try {
       const { data, error } = await supabase
         .from('profiles')
@@ -42,7 +42,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         .eq('id', userId)
         .single();
 
-      if (error) {
+      if (error && error.code === 'PGRST116') {
+        // Profile doesn't exist, let's create it
+        const { data: newProfile, error: insertError } = await supabase
+          .from('profiles')
+          .insert([
+            { id: userId, email: userEmail, subscription_tier: 'freemium' }
+          ])
+          .select()
+          .single();
+
+        if (insertError) {
+          console.error('Error creating profile:', insertError);
+        } else {
+          setProfile(newProfile);
+        }
+      } else if (error) {
         console.error('Error fetching profile:', error);
       } else {
         setProfile(data);
@@ -60,7 +75,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {
-        fetchProfile(session.user.id);
+        fetchProfile(session.user.id, session.user.email);
       } else {
         setLoading(false);
       }
@@ -71,7 +86,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {
-        fetchProfile(session.user.id);
+        fetchProfile(session.user.id, session.user.email);
       } else {
         setProfile(null);
         setLoading(false);

@@ -12,14 +12,18 @@ export function LoginButton() {
     return (
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', fontSize: '13px' }}>
-          <span style={{ fontWeight: 600 }}>{user.email}</span>
+          <span style={{ fontWeight: 600 }}>{user.user_metadata?.full_name || user.user_metadata?.name || user.email}</span>
           <span style={{ opacity: 0.7, fontSize: '11px', textTransform: 'uppercase', color: profile?.subscription_tier === 'premium' ? '#f59e0b' : 'inherit' }}>
             {profile?.subscription_tier || 'freemium'}
           </span>
         </div>
-        <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
-          {user.email?.[0].toUpperCase()}
-        </div>
+        {user.user_metadata?.avatar_url || user.user_metadata?.picture ? (
+          <img src={user.user_metadata.avatar_url || user.user_metadata.picture} alt="Avatar" style={{ width: 36, height: 36, borderRadius: '50%', border: '2px solid var(--primary)' }} />
+        ) : (
+          <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
+            {user.email?.[0].toUpperCase()}
+          </div>
+        )}
         <button 
           onClick={signOut}
           title="Sign Out"

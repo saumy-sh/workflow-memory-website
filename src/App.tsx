@@ -476,6 +476,7 @@ function App() {
           </div>
           <div className="footer-links">
             <a href="privacy.html" className="footer-link">Privacy Policy</a>
+            <a href="terms.html" className="footer-link">Terms of Service</a>
             <a href="https://github.com/workflow-memory" target="_blank" rel="noreferrer" className="footer-link">
               GitHub
             </a>
