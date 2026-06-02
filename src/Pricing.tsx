@@ -16,7 +16,7 @@ export function Pricing() {
     // This is a placeholder order_id for demonstration purposes.
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID, // Use environment variable
-      amount: "50000", // Amount in subunits (e.g., 50000 paise = 500 INR)
+      amount: "100", // Amount in subunits (e.g., 100 paise = 1 INR)
       currency: "INR",
       name: "Workflow Memory",
       description: "Premium Tier Access",
