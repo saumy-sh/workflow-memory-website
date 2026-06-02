@@ -12,6 +12,7 @@ import {
 import { Feedback } from './Feedback';
 import { Pricing } from './Pricing';
 import { FeaturesGraph } from './FeaturesGraph';
+import { LoginButton } from './LoginButton';
 import logoUrl from './assets/icon128.png';
 import demoVideoUrl from './assets/complete_demo.mp4';
 
@@ -108,9 +109,12 @@ function App() {
             <a href="#privacy">Privacy</a>
             <a href="#pricing">Pricing</a>
           </nav>
-          <button className="btn-primary header-cta" onClick={triggerRestore}>
-            Add to Chrome <ExternalLink size={16} />
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <button className="btn-primary header-cta" onClick={triggerRestore}>
+              Add to Chrome <ExternalLink size={16} />
+            </button>
+            <LoginButton />
+          </div>
         </div>
       </header>
 
