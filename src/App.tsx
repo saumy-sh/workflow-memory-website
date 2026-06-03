@@ -559,9 +559,10 @@ function App() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             <h4 style={{ color: '#ffffff', fontSize: '1rem', fontWeight: 700, marginBottom: '8px' }}>Connect</h4>
-            <a href="https://saumysh.com" target="_blank" rel="noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: '0.9rem', transition: 'color 0.2s' }}>My Site (saumysh.com)</a>
-            <a href="https://linkedin.com/in/saumysharan25" target="_blank" rel="noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: '0.9rem', transition: 'color 0.2s' }}>LinkedIn (saumysharan25)</a>
-            <a href="https://twitter.com/Saumysha_1729" target="_blank" rel="noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: '0.9rem', transition: 'color 0.2s' }}>Twitter (Saumysha_1729)</a>
+            <a href="https://saumysh.com" target="_blank" rel="noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: '0.9rem', transition: 'color 0.2s' }}>About developer </a>
+            <a href="https://linkedin.com/in/saumysharan25" target="_blank" rel="noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: '0.9rem', transition: 'color 0.2s' }}>LinkedIn </a>
+            <a href="https://twitter.com/Saumysha_1729" target="_blank" rel="noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: '0.9rem', transition: 'color 0.2s' }}>Twitter/X </a>
+            <a href="https://github.com/saumy-sh" target="_blank" rel="noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: '0.9rem', transition: 'color 0.2s' }}>Github </a>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
