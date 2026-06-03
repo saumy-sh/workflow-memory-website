@@ -25,7 +25,7 @@ export function Pricing() {
     // This is a placeholder order_id for demonstration purposes.
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID, // Use environment variable
-      amount: "1099", // Amount in subunits (e.g., 1099 cents = $10.99)
+      amount: "1", // Amount in subunits (e.g., 1 cent = $0.01)
       currency: "USD",
       name: "Workflow Memory",
       description: "Premium Tier Access",
@@ -152,7 +152,7 @@ export function Pricing() {
             <div>
               <div style={{ fontSize: 14, fontWeight: 800, color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 12 }}>Premium</div>
               <div style={{ fontSize: 36, fontWeight: 800, color: '#ffffff', marginBottom: 16, fontFamily: 'Outfit, sans-serif' }}>
-                $10.99 <span style={{ fontSize: 16, fontWeight: 700, color: '#e0e7ff' }}>/ forever</span>
+                $0.01 <span style={{ fontSize: 16, fontWeight: 700, color: '#e0e7ff' }}>/ forever</span>
               </div>
               <p style={{ color: '#f8fafc', marginBottom: 24, lineHeight: 1.7, fontSize: '0.95rem', fontWeight: 600 }}>
                 Unlock the full potential of your research with unlimited workflows, advanced workflow searching, and powerful filtering capabilities.
