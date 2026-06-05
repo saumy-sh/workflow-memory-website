@@ -28,7 +28,7 @@ export function Pricing() {
     try {
       // 1. Create order securely from the backend edge function
       const { data: orderData, error: orderError } = await supabase.functions.invoke('create-razorpay-order', {
-        body: { amount: 100, currency: "USD" }
+        body: { amount: 999, currency: "USD" }
       });
 
       if (orderError || !orderData?.id) {
@@ -170,7 +170,7 @@ export function Pricing() {
             <div>
               <div style={{ fontSize: 14, fontWeight: 800, color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 12 }}>Premium</div>
               <div style={{ fontSize: 36, fontWeight: 800, color: '#ffffff', marginBottom: 16, fontFamily: 'Outfit, sans-serif' }}>
-                $1.00 <span style={{ fontSize: 16, fontWeight: 700, color: '#e0e7ff' }}>/ forever</span>
+                $9.99 <span style={{ fontSize: 16, fontWeight: 700, color: '#e0e7ff' }}>/ forever</span>
               </div>
               <p style={{ color: '#f8fafc', marginBottom: 24, lineHeight: 1.7, fontSize: '0.95rem', fontWeight: 600 }}>
                 Unlock the full potential of your research with unlimited workflows, advanced workflow searching, and powerful filtering capabilities.
@@ -243,19 +243,26 @@ export function Pricing() {
               <div style={{ textAlign: 'left', background: 'rgba(90,124,255,0.05)', padding: 16, borderRadius: 8, marginBottom: 24 }}>
                 <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
                   <span style={{ color: 'var(--primary)' }}>⚡</span>
-                  <span style={{ color: '#fff', fontSize: 14 }}>Unlimited cloud backups</span>
+                  <span style={{ color: '#fff', fontSize: 14 }}>Unlimited workflows</span>
                 </div>
                 <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
                   <span style={{ color: 'var(--primary)' }}>🔍</span>
-                  <span style={{ color: '#fff', fontSize: 14 }}>Advanced OCR searching</span>
+                  <span style={{ color: '#fff', fontSize: 14 }}>Tracking for copied text, prompts & forms</span>
+                </div>
+                <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
+                  <span style={{ color: 'var(--primary)' }}>🏷️</span>
+                  <span style={{ color: '#fff', fontSize: 14 }}>Advanced filters & searching</span>
                 </div>
                 <div style={{ display: 'flex', gap: 12 }}>
-                  <span style={{ color: 'var(--primary)' }}>🤖</span>
-                  <span style={{ color: '#fff', fontSize: 14 }}>Priority AI processing</span>
+                  <span style={{ color: 'var(--primary)' }}>✨</span>
+                  <span style={{ color: '#fff', fontSize: 14 }}>All future updates</span>
                 </div>
               </div>
               <button
-                onClick={() => setShowSuccessModal(false)}
+                onClick={() => {
+                  setShowSuccessModal(false);
+                  window.location.reload();
+                }}
                 style={{
                   padding: '10px 24px', borderRadius: 8, background: 'var(--primary)',
                   color: '#fff', border: 'none', fontWeight: 600, cursor: 'pointer',
