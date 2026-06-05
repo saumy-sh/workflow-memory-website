@@ -26,7 +26,7 @@ const rotatingPhrases = [
 
 function App() {
   const [phraseIndex, setPhraseIndex] = useState(0);
-  const [showToast, setShowToast] = useState(false);
+  const [showToast] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [playbackRate, setPlaybackRate] = useState(1.75);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -62,11 +62,6 @@ function App() {
         setIsPlaying(true);
       }
     }
-  };
-
-  const triggerRestore = () => {
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
   };
 
   return (
@@ -110,9 +105,9 @@ function App() {
             <a href="#pricing">Pricing</a>
           </nav>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <button className="btn-primary header-cta" onClick={triggerRestore}>
+            <a href="https://chromewebstore.google.com/detail/fkfiopkljlkagbkhcaodkiolceiokgig" target="_blank" rel="noreferrer" className="btn-primary header-cta" style={{ display: 'flex', alignItems: 'center', gap: '6px', textDecoration: 'none' }}>
               Add to Chrome <ExternalLink size={16} />
-            </button>
+            </a>
             <LoginButton />
           </div>
         </div>
@@ -233,10 +228,10 @@ function App() {
           </motion.p>
           
           <div className="hero-actions">
-            <button className="btn-primary hero-btn" onClick={triggerRestore}>
+            <a href="https://chromewebstore.google.com/detail/fkfiopkljlkagbkhcaodkiolceiokgig" target="_blank" rel="noreferrer" className="btn-primary hero-btn" style={{ textDecoration: 'none' }}>
               Install Chrome Extension
-            </button>
-            <a href="#features" className="btn-secondary hero-btn">
+            </a>
+            <a href="https://chromewebstore.google.com/detail/fkfiopkljlkagbkhcaodkiolceiokgig" className="btn-secondary hero-btn">
               Explore Features <ArrowRight size={18} />
             </a>
           </div>
@@ -427,6 +422,12 @@ function App() {
 
       {/* Features Showcase Section */}
       <ProblemFeatures />
+
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '40px 0 60px 0' }}>
+        <a href="https://chromewebstore.google.com/detail/fkfiopkljlkagbkhcaodkiolceiokgig" target="_blank" rel="noreferrer" className="btn-primary hero-btn" style={{ textDecoration: 'none' }}>
+          Use Free
+        </a>
+      </div>
 
       {/* How It Works Section */}
       <section id="how-it-works" className="how-it-works">
