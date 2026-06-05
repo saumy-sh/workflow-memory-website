@@ -28,7 +28,7 @@ export function Pricing() {
     try {
       // 1. Create order securely from the backend edge function
       const { data: orderData, error: orderError } = await supabase.functions.invoke('create-razorpay-order', {
-        body: { amount: 1, currency: "USD" }
+        body: { amount: 50, currency: "USD" }
       });
 
       if (orderError || !orderData?.id) {
@@ -170,7 +170,7 @@ export function Pricing() {
             <div>
               <div style={{ fontSize: 14, fontWeight: 800, color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 12 }}>Premium</div>
               <div style={{ fontSize: 36, fontWeight: 800, color: '#ffffff', marginBottom: 16, fontFamily: 'Outfit, sans-serif' }}>
-                $0.01 <span style={{ fontSize: 16, fontWeight: 700, color: '#e0e7ff' }}>/ forever</span>
+                $0.50 <span style={{ fontSize: 16, fontWeight: 700, color: '#e0e7ff' }}>/ forever</span>
               </div>
               <p style={{ color: '#f8fafc', marginBottom: 24, lineHeight: 1.7, fontSize: '0.95rem', fontWeight: 600 }}>
                 Unlock the full potential of your research with unlimited workflows, advanced workflow searching, and powerful filtering capabilities.
