@@ -28,7 +28,7 @@ export function Pricing() {
     try {
       // 1. Create order securely from the backend edge function
       const { data: orderData, error: orderError } = await supabase.functions.invoke('create-razorpay-order', {
-        body: { amount: 50, currency: "USD" }
+        body: { amount: 100, currency: "USD" }
       });
 
       if (orderError || !orderData?.id) {
